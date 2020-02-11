@@ -2,7 +2,6 @@ package no.hvl.dat110.rpc;
 
 import java.util.HashMap;
 
-import no.hvl.dat110.TODO;
 import no.hvl.dat110.messaging.Connection;
 import no.hvl.dat110.messaging.Message;
 import no.hvl.dat110.messaging.MessagingServer;
@@ -36,19 +35,25 @@ public class RPCServer {
 		boolean stop = false;
 		
 		while (!stop) {
-	    
-		   int rpcid;
 		   
+		  Message received = connection.receive();
+		  byte[] bytemelding = received.getData();
+		  int rpcid = bytemelding[0];
+		  
+		  RPCImpl rpc = services.get(rpcid);
+		  
+		  Message svarMelding = new Message(rpc.invoke(bytemelding));
+		  
+		  connection.send(svarMelding);
+		  
 		   // TODO
 		   // - receive message containing RPC request
 		   // - find the identifier for the RPC methods to invoke
 		   // - lookup the method to be invoked
 		   // - invoke the method
 		   // - send back message containing RPC reply
-			
-		   if (true) {
-			   throw new UnsupportedOperationException(TODO.method());
-		   }
+		   
+		   
 		   
 		   if (rpcid == RPCCommon.RPIDSTOP) {
 			   stop = true;

@@ -1,15 +1,12 @@
 package no.hvl.dat110.messaging;
 
 import java.io.IOException;
-
 import java.net.Socket;
-
-import no.hvl.dat110.TODO;
 
 public class MessagingClient {
 
-	private String server;
-	private int port;
+	private String server = MessageConfig.MESSAGINGHOST;
+	private int port = MessageConfig.MESSAGINGPORT;
 
 	public MessagingClient(String server, int port) {
 		this.server = server;
@@ -18,17 +15,21 @@ public class MessagingClient {
 
 	// connect to messaging server
 	public Connection connect() {
-
-		Socket clientSocket;
 		Connection connection = null;
+		Socket clientSocket;
+		try {
+			clientSocket = new Socket(server, port);
+			connection = new Connection(clientSocket);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// TODO
 		// create TCP socket for client and connection
 		// create connection object
 		
-		if (true) {
-			throw new UnsupportedOperationException(TODO.method());
-		}
+		
 
 		return connection;
 	}
